@@ -1,7 +1,7 @@
 @extends('layouts.main')
 @section('content')
-<div id="admin">
-	<h2>Create New Category</h2><hr>
+
+	<h1>Edit {{$category->name}}</h1><hr>
 
 	@if($errors->has())
 	<div id="form-errors">
@@ -16,12 +16,12 @@
 	@endif
 
 	{{ Form::model($category, array('route' => array('categories.update', $category->id), 'method' => 'PUT')) }}
-	<p>
-		{{ Form::label('name') }}
-		{{ Form::text('name') }}
-	</p>
-	{{ Form::submit('Update Category', array('class'=>'secondary-cart-btn')) }}
-	{{ Form::close() }}	
-</div>
 
+	<div class="form-group">
+		{{ Form::label('name', 'Name') }}
+		{{ Form::text('name', null, array('class' => 'form-control')) }}
+	</div>
+	{{ Form::submit('Edit the Category!', array('class' => 'btn btn-primary')) }}
+
+	{{ Form::close() }}
 @stop
