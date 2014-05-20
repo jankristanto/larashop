@@ -2,6 +2,10 @@
 
 class CategoriesController extends \BaseController {
 
+
+	public function __construct() {
+        $this->category = new Category;
+   }
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -9,7 +13,7 @@ class CategoriesController extends \BaseController {
 	 */
 	public function index()
 	{
-		$categories = Category::all(); 
+		$categories = $this->category->all(); 
 		return View::make('categories.index')
 			->with('categories',$categories);
 	}
@@ -33,15 +37,8 @@ class CategoriesController extends \BaseController {
 	 */
 	public function store()
 	{
-		
-		$validator = Validator::make(Input::all(), Category::$rules);
-
 		// process the login
-		if ($validator->fails()) {
-			return Redirect::to('categories/create')
-				->withErrors($validator)
-				->withInput(Input::except('name'));
-		} else {
+		if ($this->category->isValid(Input::all())) {
 			// store
 			$category = new Category;
 			$category->name = Input::get('name');
@@ -50,6 +47,11 @@ class CategoriesController extends \BaseController {
 			// redirect
 			Session::flash('message', 'Successfully created category!');
 			return Redirect::to('categories');
+
+		} else {
+			return Redirect::to('categories/create')
+				->withErrors($this->category->getErrors())
+				->withInput(Input::except('name'));
 		}
 	}
 
@@ -63,7 +65,7 @@ class CategoriesController extends \BaseController {
 	public function show($id)
 	{
 		// get the category
-		$category = Category::find($id);
+		$category = $this->category->find($id);
 
 		// show the view and pass the nerd to it
 		return View::make('categories.show')
@@ -79,7 +81,7 @@ class CategoriesController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		$category = Category::find($id); 
+		$category = $this->category->find($id); 
 		return View::make('categories.edit')
 			->with('category',$category);
 	}
@@ -93,14 +95,8 @@ class CategoriesController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$validator = Validator::make(Input::all(), Category::$rules);
-
 		// process the login
-		if ($validator->fails()) {
-			return Redirect::to('categories/' . $id . '/edit')
-				->withErrors($validator)
-				->withInput(Input::except('name'));
-		} else {
+		if ($this->category->isValid(Input::all())) {
 			// store
 			$category = Category::find($id);
 			$category->name = Input::get('name');
@@ -110,6 +106,11 @@ class CategoriesController extends \BaseController {
 			// redirect
 			Session::flash('message', 'Successfully updated category!');
 			return Redirect::to('categories');
+		} else {
+			return Redirect::to('categories/' . $id . '/edit')
+				->withErrors($this->category->getErrors())
+				->withInput(Input::except('name'));
+			
 		}
 	}
 
@@ -123,7 +124,7 @@ class CategoriesController extends \BaseController {
 	public function destroy($id)
 	{
 		// delete
-		$category = Category::find($id);
+		$category = $this->category->find($id);
 		$category->delete();
 
 		// redirect
