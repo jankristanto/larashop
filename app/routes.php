@@ -19,5 +19,6 @@ Route::get('/', function()
 });
 
 Route::resource('categories', 'CategoriesController');
+Route::resource('products', 'ProductsController');
 
 

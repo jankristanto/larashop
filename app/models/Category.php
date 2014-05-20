@@ -5,6 +5,10 @@ class Category extends Eloquent{
 	private $rules = array('name' => 'required|min:3');
 	private $errors;
 
+	public function products() {
+         $this->hasMany('Product');
+    }
+    
 	public function isValid($input){
 		$validator = Validator::make($input, $this->rules);
 		if ($validator->fails()){
