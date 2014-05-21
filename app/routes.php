@@ -20,5 +20,4 @@ Route::get('/', function()
 
 Route::resource('categories', 'CategoriesController');
 Route::resource('products', 'ProductsController');
-
-
+Route::resource('users', 'UsersController');

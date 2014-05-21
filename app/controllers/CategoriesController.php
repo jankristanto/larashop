@@ -5,7 +5,7 @@ class CategoriesController extends \BaseController {
 
 	public function __construct() {
         $this->category = new Category;
-   }
+    }
 	/**
 	 * Display a listing of the resource.
 	 *
