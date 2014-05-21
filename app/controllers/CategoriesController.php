@@ -51,7 +51,7 @@ class CategoriesController extends \BaseController {
 		} else {
 			return Redirect::to('categories/create')
 				->withErrors($this->category->getErrors())
-				->withInput(Input::except('name'));
+				->withInput();
 		}
 	}
 

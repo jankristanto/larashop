@@ -57,7 +57,7 @@ return array(
 			'host'      => 'localhost',
 			'database'  => 'larashop',
 			'username'  => 'root',
-			'password'  => 'ontel789',
+			'password'  => 'password',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

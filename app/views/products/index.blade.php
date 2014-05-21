@@ -23,6 +23,16 @@
 				<td>{{ $value->name }}</td>
 				<!-- we will also add show, edit, and delete buttons -->
 				<td>
+					{{ Form::open(array('url' => 'products/' . $value->id, 'class' => 'pull-right')) }}
+					{{ Form::hidden('_method', 'DELETE') }}
+					{{ Form::submit('Delete this Product', array('class' => 'btn btn-warning')) }}
+					{{ Form::close() }}
+					<!-- show the nerd (uses the show method found at GET /nerds/{id} -->
+					<a class="btn btn-small btn-success" href="{{ URL::to('products/' . $value->id) }}">Show this Nerd</a>
+
+					<!-- edit this nerd (uses the edit method found at GET /nerds/{id}/edit -->
+					<a class="btn btn-small btn-info" href="{{ URL::to('products/' . $value->id . '/edit') }}">Edit this Nerd</a>
+
 				</td>
 			</tr>
 		@endforeach

@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration {
 			$table->text('description');
 			$table->integer("stock");
 			$table->boolean('availability')->default(1);
-			$table->decimal('price', 6, 2);
+			$table->decimal('price', 10, 2);
       		$table->integer('category_id');
 			$table->timestamps();
 		});

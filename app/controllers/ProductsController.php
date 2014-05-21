@@ -84,7 +84,14 @@ class ProductsController extends \BaseController {
 	 */
 	public function edit($id)
 	{
-		//
+		$categories = array();
+
+        foreach(Category::all() as $category){
+            $categories[$category->id] = $category->name;
+        }
+		$product = $this->product->find($id); 
+		return View::make('products.edit')
+			->with('product',$product)->with('categories',$categories);
 	}
 
 
@@ -96,7 +103,26 @@ class ProductsController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		if ($this->product->isValid(Input::all())) {
+			// store
+			// store
+			$product = Product::find($id);
+			$product->name = Input::get('name');
+			$product->description = Input::get('description');
+			$product->price = Input::get('price');
+			$product->stock = Input::get('stock');
+			$product->category_id = Input::get('category_id');
+			$product->save();
+
+			// redirect
+			Session::flash('message', 'Successfully updated product!');
+			return Redirect::to('products');
+		} else {
+			return Redirect::to('products/' . $id . '/edit')
+				->withErrors($this->product->getErrors())
+				->withInput(Input::all());
+			
+		}
 	}
 
 
