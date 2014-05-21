@@ -134,7 +134,11 @@ class ProductsController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$product = $this->product->find($id); 
+		$product->delete();
+
+		Session::flash('message','Successfully deleted product!');
+		return Redirect::to('products');
 	}
 
 
